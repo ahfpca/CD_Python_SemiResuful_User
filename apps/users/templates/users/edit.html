@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Semi-Restful Edit User</title>
+    {% load static %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'users/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/styles.css' %}">
+</head>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <!-- Title -->
+        <div class="row">
+            {% if request.session.callMode == 0 %}
+                <!-- New Record -->
+                <h1>Add a new user</h1>
+            {% else %}
+                <!-- Edit Record -->
+                <h1>Edit User {{ request.session.user_id }}</h1>
+            {% endif %}
+        </div>
+        <!-- General Error -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.extra_tags == 'error' %}
+                    <p class="row error">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <br>
+        <!-- Data Entry -->
+        {% if request.session.callMode == 0 %}
+            <!-- Create Record -->
+            <form action="/users/create" method="post">  
+                {% csrf_token %}              
+                <div class="">
+                    <label class="row dField" for="first_name">First name:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'first_name' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="first_name" id="first_name" value="{{ request.session.first_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="last_name">Last name:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'last_name' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="last_name" id="last_name" value="{{ request.session.last_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="email">Email:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'email' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="email" id="email" value="{{ request.session.email }}">
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Create">
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/users">Go Back</a>
+                </div>
+            </form>
+        {% else %}
+            <!-- Edit Record -->
+            <form action="/users/update" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ request.session.user_id }}">
+                <div class="">
+                    <label class="row dField" for="first_name">First name:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'first_name' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="first_name" id="first_name" value="{{ request.session.first_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="last_name">Last name:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'last_name' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="last_name" id="last_name" value="{{ request.session.last_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="email">Email:</label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'email' %}
+                                <label class="row error">{{ message }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input class="row" type="text" name="email" id="email" value="{{ request.session.email }}">
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Update">
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/users/{{ request.session.user_id }}">Show</a>
+                    <p>&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                    <a href="javascript:history.back()">Go Back</a>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="{% static 'users/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'users/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'users/js/bootstrap.min.js' %}"></script>        
+</body>
+</html>

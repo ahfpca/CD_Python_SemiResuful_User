@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Semi-Restful Show User</title>
+    {% load static %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'users/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/styles.css' %}">
+</head>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <h1>User {{ user.user_id }}</h1>
+        </div>
+        <!-- General Error -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.extra_tags == 'error' %}
+                    <p class="row error">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <br>
+
+        <div class="row">
+            <p>Full name: {{ user.first_name }} {{ user.last_name }}</p>
+        </div>
+        <div class="row">
+            <p>Email: {{ user.email }}</p>
+        </div>
+        <div class="row">
+            <p>Created at: {{ user.created_at }}</p>
+        </div>
+        <br>
+        <div class="row">
+            <a href="/users/{{ user.user_id }}/edit">Edit</a>
+            <p>&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+            <a href="/users/{{ user.user_id }}/delete">Delete</a>
+        </div>
+        <div class="row">
+            <a href="javascript:history.back()">Go Back</a>
+        </div>
+    </div>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="{% static 'users/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'users/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'users/js/bootstrap.min.js' %}"></script>        
+</body>
+</html>
